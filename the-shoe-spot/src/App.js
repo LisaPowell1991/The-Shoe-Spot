@@ -13,6 +13,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import Payment from './components/checkout/Chekout';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -63,6 +64,7 @@ function App() {
       <AboutUs />
       <ProductPage />
       <Contact />
+      <Payment/>
       <Footer />
     </div>
   );
