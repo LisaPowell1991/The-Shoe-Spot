@@ -2,9 +2,9 @@
 import React from 'react';
 
 // Asset imports
-import bekeeImage from '../../Assets/images/bekee.jpg';
-import lisaImage from '../../Assets/images/lisa.jpg';
-import marleyImage from '../../Assets/images/marley.jpg';
+import bekeeImage from '../../assets/images/bekee.jpg';
+import lisaImage from '../../assets/images/lisa.jpg';
+import marleyImage from '../../assets/images/marley.jpg';
 
 // CSS imports
 import './About.css';
