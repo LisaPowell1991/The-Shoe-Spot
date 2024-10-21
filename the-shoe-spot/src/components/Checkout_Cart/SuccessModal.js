@@ -14,7 +14,7 @@ const SuccessModal = ({ message, redirectUrl }) => {
     }, [redirectUrl]);
 
     return (
-        <div className="modal fade" id="successModal" tabIndex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div className="modal fade" id="successModal" tabIndex="-1" aria-labelledby="successModalLabel" inert>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">

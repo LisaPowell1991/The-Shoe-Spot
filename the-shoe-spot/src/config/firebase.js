@@ -5,6 +5,23 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { loadStripe } from '@stripe/stripe-js';
 
+// Validate environment variables
+const requiredEnvVars = [
+    'REACT_APP_FIREBASE_API_KEY',
+    'REACT_APP_FIREBASE_AUTH_DOMAIN',
+    'REACT_APP_FIREBASE_PROJECT_ID',
+    'REACT_APP_FIREBASE_STORAGE_BUCKET',
+    'REACT_APP_FIREBASE_MESSAGING_SENDER_ID',
+    'REACT_APP_FIREBASE_APP_ID',
+    'REACT_APP_STRIPE_PUBLISHABLE_KEY'
+];
+
+requiredEnvVars.forEach((envVar) => {
+    if (!process.env[envVar]) {
+        console.error(`Missing environment variable: ${envVar}`);
+    }
+});
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -27,10 +44,15 @@ const stripePromise = typeof window !== 'undefined' ? loadStripe(process.env.REA
 
 // Function to fetch shoes from Firestore
 export const getShoes = async () => {
-    const shoesCol = collection(db, 'shoes');
-    const shoeSnapshot = await getDocs(shoesCol);
-    const shoeList = shoeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    return shoeList;
+    try {
+        const shoesCol = collection(db, 'shoes');
+        const shoeSnapshot = await getDocs(shoesCol);
+        const shoeList = shoeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        return shoeList;
+    } catch (error) {
+        console.error('Error fetching shoes:', error);
+        throw error;
+    }
 };
 
 export { auth, googleProvider, db, functions, httpsCallable, stripePromise };
