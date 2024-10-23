@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { functions, httpsCallable } from '../../config/firebase';
+import PayPalButton from './PayPalButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Checkout_Cart.css';
 
@@ -13,22 +14,23 @@ const PaymentForm = ({ totalAmount, handlePaymentSuccess }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setPaymentProcessing(true);
+        setError(null);
 
         try {
-            const createPaymentIntent = httpsCallable(functions, 'createPaymentIntent');
+            const createPaymentIntent = httpsCallable(functions, 'api');
             const { data, error: functionError } = await createPaymentIntent({
-                amount: Math.round(totalAmount * 100) // amount in cents, rounded to nearest integer
+                amount: Math.round(totalAmount * 100),
+                currency: 'usd',
             });
 
             if (functionError) {
                 setError(functionError.message);
-                setPaymentProcessing(false);
                 return;
             }
 
             const { clientSecret } = data;
             if (!clientSecret) {
-                throw new Error('Missing client secret in payment intent response.');
+                throw new Error('Missing client secret.');
             }
 
             const cardElement = elements.getElement(CardElement);
@@ -36,15 +38,11 @@ const PaymentForm = ({ totalAmount, handlePaymentSuccess }) => {
             const { error: stripeError } = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: cardElement,
-                    billing_details: {
-                        // You can pass additional billing details here
-                    },
                 },
             });
 
             if (stripeError) {
                 setError(stripeError.message);
-                setPaymentProcessing(false);
                 return;
             }
 
@@ -57,16 +55,26 @@ const PaymentForm = ({ totalAmount, handlePaymentSuccess }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="payment-form">
-            <h3>Payment</h3>
-            <div className="mb-3">
-                <CardElement />
-            </div>
-            <button type="submit" className="btn btn-primary btn-lg" disabled={!stripe || paymentProcessing}>
-                {paymentProcessing ? 'Processing…' : 'Pay Now'}
-            </button>
-            {error && <div className="text-danger mt-3">{error}</div>}
-        </form>
+        <>
+            <form onSubmit={handleSubmit} className="payment-form">
+                <h3>Pay with Stripe</h3>
+                <div className="mb-3">
+                    <CardElement />
+                </div>
+                <button type="submit" className="btn btn-primary btn-lg" disabled={!stripe || paymentProcessing}>
+                    {paymentProcessing ? 'Processing…' : 'Pay Now'}
+                </button>
+                {error && <div className="text-danger mt-3">{error}</div>}
+            </form>
+
+            <hr />
+
+            <h3>Pay with PayPal</h3>
+            <PayPalButton
+                totalAmount={totalAmount}
+                handlePaymentSuccess={handlePaymentSuccess} // Use handlePaymentSuccess for PayPal as well
+            />
+        </>
     );
 };
 

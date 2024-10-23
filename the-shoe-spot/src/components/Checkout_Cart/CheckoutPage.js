@@ -1,4 +1,3 @@
-// CheckoutPage.js
 import React, { useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm';
@@ -6,7 +5,6 @@ import PaymentForm from './PaymentForm';
 import { stripePromise } from '../../config/firebase';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Checkout_Cart.css';
-
 
 const CheckoutPage = ({ cart, setCart, user }) => {
     const [successMessage, setSuccessMessage] = useState('');
@@ -28,17 +26,11 @@ const CheckoutPage = ({ cart, setCart, user }) => {
         return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
     };
 
-    const countTotalQuantity = (name) => {
-        return cart.reduce((total, item) => {
-            return item.name === name ? total + item.quantity : total;
-        }, 0);
-    };
-
     const handlePaymentSuccess = () => {
         setSuccessMessage('Payment successfully processed! You will be redirected to the homepage shortly...');
         setTimeout(() => {
             setSuccessMessage('');
-            setCart([]);
+            setCart([]); // Clear cart after success
             setFormData({
                 email: '',
                 contact: '',
@@ -52,11 +44,10 @@ const CheckoutPage = ({ cart, setCart, user }) => {
                 postalCode: '',
                 shippingMethod: 'courier'
             });
-            // Redirect to the homepage after 3 seconds
             setTimeout(() => {
-                window.location.href = '/'; // Change the URL to your homepage
+                window.location.href = '/'; // Redirect to the homepage
             }, 2000);
-        }, 5000); // Display success message for 5 seconds
+        }, 5000);
     };
 
     const handleInputChange = (e) => {
@@ -87,7 +78,7 @@ const CheckoutPage = ({ cart, setCart, user }) => {
                                         className="img-checkout"
                                     />
                                     <span className="badge bg-primary position-absolute top-0 end-0">
-                                        {countTotalQuantity(item.name)}
+                                        {item.quantity}
                                     </span>
                                 </div>
                                 <div>
@@ -103,8 +94,7 @@ const CheckoutPage = ({ cart, setCart, user }) => {
                         <Elements stripe={stripePromise}>
                             <PaymentForm
                                 totalAmount={getTotalPrice()}
-                                handlePaymentSuccess={handlePaymentSuccess}
-                                formData={formData}
+                                handlePaymentSuccess={handlePaymentSuccess} // Pass handlePaymentSuccess as a prop
                             />
                         </Elements>
                     </div>
