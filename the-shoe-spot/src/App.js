@@ -87,12 +87,13 @@ function App() {
     try {
       await signOut(auth);
       setUser(null);
-      setCart([]);
+      setCart([]); // Clear the cart
       toast.success('User logged out successfully!');
     } catch (error) {
       toast.error('Error logging out: ' + error.message);
     }
   };
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <Router>
@@ -102,7 +103,7 @@ function App() {
           handleShowLogin={handleShowLogin}
           handleShowSignup={handleShowSignup}
           handleLogout={handleLogout}
-          cartItemCount={cart.reduce((total, item) => total + item.quantity, 0)} // Calculate total quantity in cart
+          cartItemCount={cartItemCount}
         />
 
         <Login show={showLogin} handleClose={handleCloseLogin} />

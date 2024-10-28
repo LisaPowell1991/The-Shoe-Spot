@@ -30,11 +30,27 @@ const Cart = ({ cart, updateCartItemQuantity, removeCartItem, user }) => {
                                         <p className="card-text">Size: {item.size}</p>
                                         <p className="card-text">Price: ${item.price.toFixed(2)}</p>
                                         <div className="d-flex center">
-                                            <button className="btn btn-outline-secondary me-2" onClick={() => updateCartItemQuantity(index, item.quantity - 1)} disabled={item.quantity <= 1}>-</button>
+                                            <button
+                                                className="btn btn-outline-secondary me-2"
+                                                onClick={() => updateCartItemQuantity(index, item.quantity - 1)}
+                                                disabled={item.quantity <= 1}
+                                            >
+                                                -
+                                            </button>
                                             <span>{item.quantity}</span>
-                                            <button className="btn btn-outline-secondary ms-2" onClick={() => updateCartItemQuantity(index, item.quantity + 1)}>+</button>
+                                            <button
+                                                className="btn btn-outline-secondary ms-2"
+                                                onClick={() => updateCartItemQuantity(index, item.quantity + 1)}
+                                            >
+                                                +
+                                            </button>
                                         </div>
-                                        <button className="btn btn-danger mt-3" onClick={() => removeCartItem(index)}>Remove</button>
+                                        <button
+                                            className="btn btn-danger mt-3"
+                                            onClick={() => removeCartItem(index)}
+                                        >
+                                            Remove
+                                        </button>
                                     </div>
                                 </div>
                             </div>

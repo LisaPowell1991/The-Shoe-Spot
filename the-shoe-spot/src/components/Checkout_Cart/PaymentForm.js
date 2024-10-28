@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { functions, httpsCallable } from '../../config/firebase';
-import PayPalButton from './PayPalButton';
+/* import PayPalButton from './PayPalButton'; */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Checkout_Cart.css';
 
@@ -70,10 +70,10 @@ const PaymentForm = ({ totalAmount, handlePaymentSuccess }) => {
             <hr />
 
             <h3>Pay with PayPal</h3>
-            <PayPalButton
+            {/*    <PayPalButton
                 totalAmount={totalAmount}
-                handlePaymentSuccess={handlePaymentSuccess} // Use handlePaymentSuccess for PayPal as well
-            />
+                handlePaymentSuccess={handlePaymentSuccess}
+            /> */}
         </>
     );
 };

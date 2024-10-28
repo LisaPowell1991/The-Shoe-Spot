@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
-import SuccessPopup from './SuccessPopup'; // Import the popup component
+import SuccessPopup from './SuccessPopup';
 
-const PayPalButton = ({ totalAmount }) => {
+const PayPalButton = ({ totalAmount, setCart }) => {
     const [paymentSuccess, setPaymentSuccess] = useState(false);
 
     const handlePaymentSuccess = () => {
-        setPaymentSuccess(true); // Show the success popup
+        setPaymentSuccess(true);
+        setCart([]); // Clear the cart on successful payment
     };
 
     return (
@@ -25,7 +26,7 @@ const PayPalButton = ({ totalAmount }) => {
                     }}
                     onApprove={(data, actions) => {
                         return actions.order.capture().then((details) => {
-                            handlePaymentSuccess(); // Trigger the success popup
+                            handlePaymentSuccess();
                         });
                     }}
                     onError={(err) => {

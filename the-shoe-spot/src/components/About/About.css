@@ -1,10 +1,8 @@
-/* Header styles */
 .header h1 {
   color: #F2921D;
   font-size: 2.5rem;
 }
 
-/* About section styles */
 .about-title {
   font-family: 'Abril Fatface', cursive;
   font-size: 2rem;
@@ -16,7 +14,6 @@
   font-size: 1rem;
 }
 
-/* Team section styles */
 .team-container {
   align-items: center;
   display: flex;
@@ -37,30 +34,27 @@
   position: relative;
 }
 
-.team-card:hover {
-  .team-image {
-    border-radius: 50%;
-    height: 200px;
-    margin-top: 20px;
-    width: 200px;
-  }
-
-  .team-card__role {
-    left: -130%;
-  }
-
-  .team-card__info {
-    opacity: 1;
-    visibility: visible;
-  }
+.team-card:hover .team-image {
+  border-radius: 50%;
+  height: 200px;
+  margin-top: 20px;
+  width: 200px;
 }
 
-/* Team card styles */
+.team-card:hover .team-card__role {
+  left: -130%;
+}
+
+.team-card:hover .team-card__info {
+  opacity: 1;
+  visibility: visible;
+}
+
 .team-image {
   display: block;
   height: 500px;
   margin: 0 auto;
-  object-fit: cover;
+  object-fit: fill;
   object-position: center;
   transform-origin: center;
   transition: all 0.4s;
@@ -99,15 +93,16 @@
   font-size: 1.8rem !important;
   letter-spacing: 1.1px;
   margin: 10px 0;
+  text-align: center !important;
 }
 
 .team-card__desc {
   font-size: 1rem;
   line-height: 1.5;
   margin: 0 0 20px;
+  text-align: center;
 }
 
-/* Media queries */
 @media only screen and (max-width: 1200px) {
   .team-card {
     flex: 0 0 48%;

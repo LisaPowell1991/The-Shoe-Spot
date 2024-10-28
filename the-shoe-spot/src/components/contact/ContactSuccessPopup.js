@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Checkout_Cart.css';
+import './contact.css';
 
-const SuccessPopup = ({ message }) => {
+const ContactSuccessPopup = ({ message }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate('/');
+            navigate('/home');
         }, 3000);
         return () => clearTimeout(timer);
     }, [navigate]);
@@ -22,4 +22,4 @@ const SuccessPopup = ({ message }) => {
     );
 };
 
-export default SuccessPopup;
+export default ContactSuccessPopup;

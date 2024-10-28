@@ -1,15 +1,9 @@
-// React related imports
 import React from 'react';
-
-// Asset imports
 import bekeeImage from '../../assets/images/bekee.jpg';
 import lisaImage from '../../assets/images/lisa.jpg';
 import marleyImage from '../../assets/images/marley.jpg';
-
-// CSS imports
 import './About.css';
 
-// TeamMember component
 const TeamMember = ({ image, name, role, desc }) => (
     <div className="team-card">
         <div className="team-card__image">
@@ -25,7 +19,6 @@ const TeamMember = ({ image, name, role, desc }) => (
     </div>
 );
 
-// AboutUs component
 const AboutUs = () => (
     <div className="container mt-5 header">
         <h1 className="text-center">About The Shoe Spot</h1>

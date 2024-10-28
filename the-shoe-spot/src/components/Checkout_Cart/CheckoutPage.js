@@ -3,6 +3,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm';
 import PaymentForm from './PaymentForm';
 import { stripePromise } from '../../config/firebase';
+import PayPalButton from './PayPalButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Checkout_Cart.css';
 
@@ -30,7 +31,7 @@ const CheckoutPage = ({ cart, setCart, user }) => {
         setSuccessMessage('Payment successfully processed! You will be redirected to the homepage shortly...');
         setTimeout(() => {
             setSuccessMessage('');
-            setCart([]); // Clear cart after success
+            setCart([]); // Clear the cart
             setFormData({
                 email: '',
                 contact: '',
@@ -45,7 +46,7 @@ const CheckoutPage = ({ cart, setCart, user }) => {
                 shippingMethod: 'courier'
             });
             setTimeout(() => {
-                window.location.href = '/'; // Redirect to the homepage
+                window.location.href = '/';
             }, 2000);
         }, 5000);
     };
@@ -90,13 +91,24 @@ const CheckoutPage = ({ cart, setCart, user }) => {
                                 </div>
                             </div>
                         ))}
-                        <h3>Total: ${getTotalPrice()}</h3>
+                        <div className="d-flex justify-content-between">
+                            <h4>Total:</h4>
+                            <h4>${getTotalPrice()}</h4>
+                        </div>
+
+                        {/* Payment Form */}
                         <Elements stripe={stripePromise}>
                             <PaymentForm
                                 totalAmount={getTotalPrice()}
-                                handlePaymentSuccess={handlePaymentSuccess} // Pass handlePaymentSuccess as a prop
+                                handlePaymentSuccess={handlePaymentSuccess}
                             />
                         </Elements>
+
+                        {/* PayPal Button */}
+                        <PayPalButton
+                            totalAmount={getTotalPrice()}
+                            setCart={setCart} // Pass setCart to PayPalButton
+                        />
                     </div>
                 </div>
             </div>
