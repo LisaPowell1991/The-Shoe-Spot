@@ -110,9 +110,9 @@
 }
 
 @media only screen and (max-width: 767px) {
-  body {
+  /*  body {
     padding: 50px 20px;
-  }
+  } */
 
   .team-card {
     flex: 0 0 100%;
